@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:14
+    container_name: db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "6543:5432"
+    env_file:
+      - .env
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web
+    image: lbrry
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/app
+    expose:
+      - 8000
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:

@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "lbrry"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.78.0"
+python-dotenv = "^0.18.0"
+uvicorn = "^0.18.2"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+black = "^22.6.0"
+mypy = "^0.961"
+
+[tool.mypy]
+python-version = "3.9"
+ignore_missing_imports = true
+
+[tool.isort]
+profile = "hug"
+line_length = 88
+wrap_length = 88
+sections = ["FUTURE", "STDLIB", "FIRSTPARTY", "THIRDPARTY", "LOCALFOLDER",]
+
+[tool.coverage.run]
+omit=[
+    "*/site-packages/*",
+    "*/tests/*",
+    "*/migrations/*",
+    "**/__init__.py",
+]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
