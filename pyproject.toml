@@ -17,7 +17,6 @@ black = "^22.6.0"
 mypy = "^0.961"
 
 [tool.mypy]
-python-version = "3.9"
 ignore_missing_imports = true
 
 [tool.isort]
